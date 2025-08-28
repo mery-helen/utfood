@@ -5,7 +5,7 @@
 - Lucas Hajime Oshiro Takatuzi
 
 ## 📖 Descrição do projeto
-Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize o login com as informações instituicionais (RA e senha) e visualize com detalhes o cardápio do dia, além de poder efetuar o pagamento online da refeição e receber uma nota fiscal digital, que será validada no balcão do restaurante. Como resultado, o tempo de espera presencial na fila do RU será reduzido.
+Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize o login com as informações instituicionais (RA e senha) e visualize com detalhes o cardápio do dia, além de poder efetuar o pagamento online da refeição e receber uma nota fiscal digital, que será validada no balcão do restaurante. Como resultado, o tempo de espera presencial na fila do RU poderá ser reduzido.
 
 ## 🎨 Prototipação no Figma
 
