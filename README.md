@@ -1,4 +1,4 @@
-# 📌 Spears & Spritz - Cardápio Digital de Drinks
+# 📌 UTFood - Cardápio Digital do RU da UTFPR 
 
 ## 👩‍💻 Autores
 - Mery Helen de Souza
