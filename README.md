@@ -8,7 +8,7 @@
 Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize o login com as informações instituicionais (RA e senha) e visualize com detalhes o cardápio do dia, além de poder efetuar o pagamento online da refeição e receber uma nota fiscal digital, que será validada no balcão do restaurante. Como resultado, o tempo de espera presencial na fila do RU poderá ser reduzido.
 
 ## 🎨 Prototipação no Figma
-
+https://www.figma.com/design/Gf19WPZ3Iy8ONeoR8i5HUD/UTFood?node-id=0-1&m=dev&t=5yq3L1s8GIk1KSN4-1
 
 ## 🖌️ Design System
 
