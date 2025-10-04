@@ -5,15 +5,25 @@
 - Lucas Hajime Oshiro Takatuzi
 
 ## 📖 Descrição do projeto
-Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize o login com as informações instituicionais (RA e senha) e visualize com detalhes o cardápio do dia, além de poder efetuar o pagamento online da refeição e receber uma nota fiscal digital, que será validada no balcão do restaurante. Como resultado, o tempo de espera presencial na fila do RU poderá ser reduzido.
+Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize a autenticação com as informações institucionais (RA e senha), visualize com detalhes o cardápio do dia, assim como a listagem dos produtos disponíveis em cantina (drinks disponíveis, categorias, buscas por nomes), além de realizar o resumo do pedido, para assim facilitar e agilizar a compra.
 
 ## 🎨 Prototipação no Figma
 https://www.figma.com/design/Gf19WPZ3Iy8ONeoR8i5HUD/UTFood?node-id=0-1&m=dev&t=5yq3L1s8GIk1KSN4-1
 
 ## 🖌️ Design System
+Cores principais:
+#FFFFE3
+#FECB30
+#D1273F
+#7C2B40
+#919191
 
+ Fontes: 
+Montserrat
+Lora
 
 ## 🎭 Framework CSS
+Materialize CSS/Material Design: Para o desenvolvimento do design do aplicativo, foi escolhido o framework Materialize CSS, baseado no Material Design. A decisão se justifica pela praticidade na construção de componentes visuais padronizados, pelo suporte nativo à responsividade e pela consistência estética que o framework oferece. Dessa forma, o UTFood consegue unir identidade institucional, usabilidade e uma interface agradável para os alunos.
 
 
 ## ⚙️ Backend utilizado
