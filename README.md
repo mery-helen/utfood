@@ -28,8 +28,8 @@ https://www.figma.com/design/Gf19WPZ3Iy8ONeoR8i5HUD/UTFood?node-id=0-1&m=dev&t=5
 <img width="535" height="645" alt="pallt (3)" src="https://github.com/user-attachments/assets/cbd126eb-2061-46dc-9a6b-a53cee460624" />
 
 ### Fontes:
-Montserrat
-Lora
+- Montserrat
+- Lora
 
 ## 🎭 Framework CSS
 Materialize CSS/Material Design: Para o desenvolvimento do design do aplicativo, foi escolhido o framework Materialize CSS, baseado no Material Design. A decisão se justifica pela praticidade na construção de componentes visuais padronizados, pelo suporte nativo à responsividade e pela consistência estética que o framework oferece. Dessa forma, o UTFood consegue unir identidade institucional, usabilidade e uma interface agradável para os alunos.
