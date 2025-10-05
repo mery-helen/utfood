@@ -6,20 +6,28 @@
 - Lucas Hajime Oshiro Takatuzi
 
 ## 📖 Descrição do projeto
-Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize a autenticação com as informações institucionais (RA e senha), visualize com detalhes o cardápio do dia, assim como a listagem dos produtos disponíveis em cantina (drinks disponíveis, categorias, buscas por nomes), além de realizar o resumo do pedido, para assim facilitar e agilizar a compra.
+Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize a autenticação com as informações institucionais (RA e senha), visualize com detalhes o cardápio do dia e os produtos disponíveis na cantina(bebidas, salgados, doces e etc) e ainda avalie a refeição feita, além de poder ter acesso às informações nutricionais dos produtos a serem consumidos, para que o aluno possa ter controle e consciência sobre o que consome.
+
+O aplicativo também conta com o Painel Administrativo, que será gerenciado pela entidade responsável pelo RU. O admnistrador fará todo o gerenciamento dos produtos e do estoque, podendo adicionar, remover e editar itens, além de também ter a autorização para marcar itens como disponíveis ou indisponíveis.
 
 ## 🎨 Prototipação no Figma
 https://www.figma.com/design/Gf19WPZ3Iy8ONeoR8i5HUD/UTFood?node-id=0-1&m=dev&t=5yq3L1s8GIk1KSN4-1
 
 ## 🖌️ Design System
-Cores principais:
-#FFFFE3
-#FECB30
-#D1273F
-#7C2B40
-#919191
+<img width="1600" height="1200" alt="pallette" src="https://github.com/user-attachments/assets/3c1f84d7-daff-4f7c-9ae3-2581eed7ce1c" />
 
- Fontes: 
+#F8F9FA | #FFFFE3 | #FECB30 | #D1273F | #7C2B40 | #919191
+
+### Cores primárias:
+<img width="535" height="645" alt="pallt (1)" src="https://github.com/user-attachments/assets/2f2b655f-2ddc-4018-b0da-fc3153c05f0c" />
+
+### Cores secundárias:
+<img width="535" height="645" alt="pallt (2)" src="https://github.com/user-attachments/assets/a8924737-439e-4f6b-a67f-5aa9f05d0225" />
+
+### Cores de suporte:
+<img width="535" height="645" alt="pallt (3)" src="https://github.com/user-attachments/assets/cbd126eb-2061-46dc-9a6b-a53cee460624" />
+
+### Fontes:
 Montserrat
 Lora
 
