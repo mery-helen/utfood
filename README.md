@@ -1,4 +1,5 @@
 # 📌 UTFood - Cardápio Digital do RU da UTFPR 
+![Logo](https://github.com/user-attachments/assets/31534a6d-c0c6-42ec-aca6-2bf3123fe14c)
 
 ## 👩‍💻 Autores
 - Mery Helen de Souza
