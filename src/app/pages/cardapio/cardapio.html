@@ -1,0 +1,100 @@
+<app-header></app-header>
+
+<main class="cardapio-main">
+  <div class="container">
+    <!-- Seção de Prato do Dia -->
+    <section class="prato-dia-section">
+      <h2 class="section-title">Prato do Dia</h2>
+
+      <div class="prato-dia-container" *ngIf="pratoDoDia.length > 0; else noPratoDoDia">
+        <div class="grid grid-cols-2">
+          <div *ngFor="let prato of pratoDoDia" class="prato-card">
+            <div class="prato-header">
+              <h3 class="prato-nome">{{ prato.nome }}</h3>
+              <span class="prato-tipo" [class.principal]="prato.tipo === 'principal'">
+                {{ prato.tipo === 'principal' ? 'Principal' : 'Sobremesa' }}
+              </span>
+            </div>
+            <p class="prato-descricao">{{ prato.descricao }}</p>
+            <div class="prato-footer">
+              <span class="prato-disponivel" *ngIf="prato.disponivel">
+                ✓ Disponível
+              </span>
+              <button class="btn btn-secondary" *ngIf="prato.info_nutricional">
+                Ver Nutrição
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noPratoDoDia>
+        <div class="empty-state">
+          <p class="empty-message">Nenhum prato do dia disponível no momento.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- Seção de Categorias e Itens -->
+    <section class="cardapio-section">
+      <h2 class="section-title">Itens da Cantina</h2>
+
+      <!-- Botões de Categorias -->
+      <div class="categoria-buttons">
+        <button
+          class="categoria-btn"
+          [class.active]="selectedCategory === 'todos'"
+          (click)="filterByCategory('todos')"
+        >
+          Todos
+        </button>
+        <button
+          *ngFor="let categoria of categorias"
+          class="categoria-btn"
+          [class.active]="selectedCategory === categoria.id"
+          (click)="filterByCategory(categoria.id)"
+        >
+          {{ categoria.nome }}
+        </button>
+      </div>
+
+      <!-- Mensagem de Carregamento -->
+      <div class="loading" *ngIf="isLoading">
+        <p>Carregando itens...</p>
+      </div>
+
+      <!-- Mensagem de Erro -->
+      <div class="alert alert-error" *ngIf="error">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-message">{{ error }}</span>
+      </div>
+
+      <!-- Grid de Itens -->
+      <div class="itens-grid" *ngIf="!isLoading && itens.length > 0; else noItens">
+        <div class="grid grid-cols-3">
+          <div *ngFor="let item of itens" class="item-card">
+            <div class="item-header">
+              <h3 class="item-nome">{{ item.nome }}</h3>
+              <span class="item-preco">{{ formatPrice(item.preco) }}</span>
+            </div>
+            <p class="item-descricao">{{ item.descricao }}</p>
+            <div class="item-footer">
+              <span class="item-disponivel" *ngIf="item.disponivel">
+                ✓ Disponível
+              </span>
+              <span class="item-indisponivel" *ngIf="!item.disponivel">
+                ✗ Indisponível
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noItens>
+        <div class="empty-state" *ngIf="!isLoading">
+          <p class="empty-message">Nenhum item encontrado para esta categoria.</p>
+        </div>
+      </ng-template>
+    </section>
+  </div>
+</main>

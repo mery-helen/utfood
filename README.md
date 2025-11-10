@@ -1,107 +1,222 @@
-# 📌 UTFood - Cardápio Digital do RU da UTFPR 
-![Logo](https://github.com/user-attachments/assets/31534a6d-c0c6-42ec-aca6-2bf3123fe14c)
+# 🍽️ Cardápio Universitário - MVP
 
-## 👩‍💻 Autores
-- Mery Helen de Souza
-- Lucas Hajime Oshiro Takatuzi
+Um sistema de cardápio digital para alunos e administradores de universidades, desenvolvido em **Angular** com **PocketBase** como backend e **Materialize CSS** para o design.
 
-## 📖 Descrição do projeto
-Este projeto tem como objetivo digitalizar e facilitar a experiência dos estudantes da UTFPR no Restaurante Universitário (RU). A aplicação permite que o aluno realize a autenticação com as informações institucionais (RA e senha), visualize com detalhes o cardápio do dia e os produtos disponíveis na cantina(bebidas, salgados, doces e etc) e ainda avalie a refeição feita, além de poder ter acesso às informações nutricionais dos produtos a serem consumidos, para que o aluno possa ter controle e consciência sobre o que consome.
+## ✨ Funcionalidades
 
-O aplicativo também conta com o Painel Administrativo, que será gerenciado pela entidade responsável pelo RU. O admnistrador fará todo o gerenciamento dos produtos e do estoque, podendo adicionar, remover e editar itens, além de também ter a autorização para marcar itens como disponíveis ou indisponíveis.
+### Para Alunos
+- ✅ Login com email e senha
+- ✅ Visualizar cardápio do dia (prato principal + sobremesa)
+- ✅ Visualizar itens da cantina por categoria
+- ✅ Filtrar itens por categoria (Todos, Lanches, Bebidas, Sobremesas, etc.)
+- ✅ Ver informações nutricionais dos pratos
+- ✅ Avaliar refeições
 
-## 🎨 Prototipação no Figma
-https://www.figma.com/design/Gf19WPZ3Iy8ONeoR8i5HUD/UTFood?node-id=0-1&m=dev&t=5yq3L1s8GIk1KSN4-1
+### Para Administradores
+- ✅ Login exclusivo para admin
+- ✅ Adicionar novos itens à cantina
+- ✅ Remover itens
+- ✅ Marcar itens como disponível/indisponível
+- ✅ Gerenciar todas as categorias
+- ✅ Visualizar todos os itens (incluindo indisponíveis)
 
-## 🖌️ Design System
-<img width="1600" height="1200" alt="pallette" src="https://github.com/user-attachments/assets/3c1f84d7-daff-4f7c-9ae3-2581eed7ce1c" />
+## 🚀 Guia de Configuração e Execução
 
-#F8F9FA | #FFFFE3 | #FECB30 | #D1273F | #7C2B40 | #919191
+### Pré-requisitos
+- Node.js 18+ instalado
+- PocketBase instalado e configurado
+- Angular CLI instalado
 
-### Cores primárias:
-<img width="535" height="645" alt="pallt (1)" src="https://github.com/user-attachments/assets/2f2b655f-2ddc-4018-b0da-fc3153c05f0c" />
+### Passo 1: Instalar Dependências
+```bash
+npm install
+```
 
-### Cores secundárias:
-<img width="535" height="645" alt="pallt (2)" src="https://github.com/user-attachments/assets/a8924737-439e-4f6b-a67f-5aa9f05d0225" />
+### Passo 2: Configurar PocketBase
 
-### Cores de suporte:
-<img width="535" height="645" alt="pallt (3)" src="https://github.com/user-attachments/assets/cbd126eb-2061-46dc-9a6b-a53cee460624" />
+#### 2.1 Download e Instalação
+1. Baixe o PocketBase em: https://pocketbase.io/docs/
+2. Crie uma pasta para o backend (ex: `cardapio-backend`)
+3. Descompacte o arquivo nessa pasta
 
-### Fontes:
-- Montserrat
-- Lora
+#### 2.2 Iniciar o Servidor PocketBase
+```bash
+# Linux/macOS
+./pocketbase serve
 
-## 🎭 Framework CSS
-Materialize CSS/Material Design: Para o desenvolvimento do design do aplicativo, foi escolhido o framework Materialize CSS, baseado no Material Design. A decisão se justifica pela praticidade na construção de componentes visuais padronizados, pelo suporte nativo à responsividade e pela consistência estética que o framework oferece. Dessa forma, o UTFood consegue unir identidade institucional, usabilidade e uma interface agradável para os alunos.
+# Windows (PowerShell)
+./pocketbase.exe serve
+```
 
+O servidor iniciará em: `http://127.0.0.1:8090`
 
-## ⚙️ Backend utilizado
+#### 2.3 Criar Coleções no PocketBase
 
+Acesse a Admin UI em `http://127.0.0.1:8090/_/` e crie as seguintes coleções:
 
-## 📦 Dependências
+**1. Coleção: users (já existe, apenas customize)**
+- Adicione os campos:
+  - `ra` (Text)
+  - `role` (Text, valores: "aluno" ou "admin")
+  - `name` (Text)
 
+**2. Coleção: categorias**
+- `nome` (Text, obrigatório)
+- `icone` (Text, opcional)
 
-## 🚀 Link para o site em produção
+**3. Coleção: pratos**
+- `nome` (Text, obrigatório)
+- `descricao` (Text, obrigatório)
+- `tipo` (Text, valores: "principal" ou "sobremesa")
+- `info_nutricional` (JSON, opcional)
+- `data` (Date, obrigatório)
+- `disponivel` (Boolean, padrão: true)
 
+**4. Coleção: itens_cantina**
+- `nome` (Text, obrigatório)
+- `descricao` (Text, obrigatório)
+- `preco` (Number, obrigatório)
+- `categoria` (Relation com categorias)
+- `disponivel` (Boolean, padrão: true)
 
-## ✅ Checklist de funcionalidades
-### RA1 - Prototipar e projetar interfaces gráficas de usuário, considerando princípios de usabilidade e experiência do usuário.
-- [ ] ID1: Desenvolver protótipos de interfaces que demonstram compreensão das diretrizes de usabilidade.
-- [ ] ID2: Projetar interfaces responsivas que se adaptam a diferentes tamanhos de tela.
+**5. Coleção: avaliacoes**
+- `prato` (Relation com pratos)
+- `aluno` (Relation com users)
+- `nota` (Number, 1-5)
+- `comentario` (Text)
 
-### RA2 - Criar e reutilizar componentes em frameworks frontend, desenvolvendo interfaces modulares, responsivas e estilizadas.
-- [ ] ID3: Desenvolver componentes reutilizáveis e que se adaptem de maneira responsiva em vários tamanhos de tela.
-- [ ] ID4: Incorporar componentes de frameworks CSS.
-- [ ] ID5: Aplicar diretivas estruturais para exibir ou ocultar elementos de forma condicional.
-- [ ] ID6: Utilizar diretivas estruturais para repetir elementos de interface de maneira dinâmica, a fim de criar listas, galerias ou outras visualizações baseadas em conjuntos de dados.
-- [ ] ID7: Aplicar Pipes para formatar a apresentação de dados.
+#### 2.4 Configurar Regras de API
 
-### RA3 - Sincronizar dados entre a interface gráfica e o modelo de dados, aplicando técnicas de binding para manter a consistência.
-- [ ] ID8: Aplicar técnicas de one-way data binding, como Interpolation e Property Binding, para exibir e atualizar dados na interface gráfica de maneira unidirecional.
-- [ ] ID9: Aplicar técnicas de event binding para capturar eventos do usuário na interface e interagir com o modelo de dados.
-- [ ] ID10: Aplicar técnicas de two-way data binding para criar uma sincronização bidirecional automática entre a interface e o modelo de dados.
-- [ ] ID11: Usar variáveis de template para manipulação dinâmica dos dados na interface gráfica.
+Para cada coleção, configure as API Rules conforme necessário:
 
-### RA4 - Implementar comunicação eficaz entre componentes, utilizando padrões de comunicação e serviços para compartilhar lógica e dados.
-- [ ] ID12: Criar comunicação entre componentes não relacionados hierarquicamente por meio de serviços através do mecanismo de injeção de dependência.
-- [ ] ID13: Utilizar as diretivas @Input ou @Output para comunicanção em uma hierarquia de componentes.
+**pratos - List/View Rule:**
+```
+disponivel = true
+```
 
-### RA5 - Criar interfaces de navegação intuitivas e responsivas, implementando roteamento em aplicações de página única (SPA).
-- [ ] ID14: Configurar rotas para diferentes partes da aplicação, permitindo a navegação entre páginas distintas.
-- [ ] ID15: Passar dados entre componentes que representam diferentes telas usando parâmetros de rotas.
-- [ ] ID16: Criar uma estrutura de navegação aninhada para representar hierarquias de conteúdo.
-- [ ] ID17: Aplicar guardas de rotas para controlar o acesso a rotas específicas da aplicação, assegurando que somente usuários autorizados possam acessar determinadas partes da interface.
+**itens_cantina - List/View Rule:**
+```
+disponivel = true
+```
 
-### RA6 - Realizar requisições assíncronas para serviços web, compreendendo os protocolos e formatos de troca de dados, tratando respostas e erros.
-- [ ] ID18: Fazer requisições assíncronas a uma API pública para no mínimo a operação GET.
-- [ ] ID19: Fazer requisições assíncronas a uma API particular (ferramenta BaaS) para as operações GET, POST, PUT, PATCH e DELETE.
-- [ ] ID20: Tratar respostas de sucesso e erros das requisições assíncronas.
-- [ ] ID21: Aplicar validações de entrada nos campos do formulário, utilizando técnicas como expressões regulares (REGEX), e apresentar mensagens de erro claras e informativas para auxiliar os usuários a corrigir entradas incorretas.
-- [ ] ID22: Desabilitar adequadamente o botão de submit enquanto o formulário conter campos inválidos, evitando a submissão de dados incorretos.
-- [ ] ID23: Utilizar Promises para tratar respostas assíncronas.
-- [ ] ID24: Utilizar Observables para tratar respostas assíncronas.
+**avaliacoes - Create Rule:**
+```
+@request.auth.id != ""
+```
 
-### RA7 - Gerenciar o código-fonte de maneira eficiente, implementar boas práticas de controle de versão e colaborar em projetos de desenvolvimento.
-- [ ] ID25: Criar um repositório no GitHub utilizando a estrutura do Gitflow, estabelecendo as branches "main" e "develop".
-- [ ] ID26: Colaborar com outros membros do projeto, realizando fusões (merges) e resolução de conflitos.
-- [ ] ID27: Planejar, configurar e executar o processo de build da aplicação, preparando-a para produção e realizar o deploy em um ambiente de hospedagem.
+#### 2.5 Adicionar Dados de Teste
 
+Crie alguns registros de teste em cada coleção para testar a aplicação.
 
-## 🛠️ Instruções de execução
-- Clonar o repositório com `git clone`
-- Fazer checkout no branch `develop` que contém as modificações mais recentes
-- Abrir o projeto no editor Visual Studio Code (VS Code)
-- Abrir um terminal pelo VSCode ou qualquer terminal do seu Sistema Operacional apontando para o diretório raiz do projeto 
-- Instalar as dependências contidas no `package.json`
-  - Comando: `npm i`
-- (Opcional) Instalar o JSON Server globalmente disponível em `https://www.npmjs.com/package/json-server`
-  - Comando: `npm i -g json-server` 
-  - É opcional porque a dependência já vem cadastrada no arquivo `package.json` para instalação local na pasta `node_modules`
-- Executar a API Fake (JSON Server) via um dos seguintes comandos: 
-  - Execução via script registrado no `package.json`: `npm run json:server:routes` 
-  - Ou via Execução explícita: `json-server --watch db.json --routes routes.json`
-- O comando para execução do JSON Server deve ser aplicado no diretório raiz do projeto, ou seja, que contém o arquivo `db.json` e `routes.json`.
-  - Por padrão, a aplicação JSON Server executa no endereço `localhost:3000`    
-- Abrir um novo terminal pelo VSCode e então executar o projeto Angular
-  - Comando: `ng s -o`
+### Passo 3: Executar a Aplicação Angular
+```bash
+ng serve
+```
 
+A aplicação estará disponível em: `http://localhost:4200`
+
+### Passo 4: Testar a Aplicação
+
+1. **Login como Aluno:**
+   - Email: (use um email criado no PocketBase)
+   - Senha: (use a senha configurada)
+   - Você será redirecionado para o cardápio
+
+2. **Login como Administrador:**
+   - Email: (use um email com role "admin")
+   - Senha: (use a senha configurada)
+   - Você será redirecionado para o painel de administração
+
+## 📁 Estrutura do Projeto
+
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── header/          # Cabeçalho com navegação
+│   │   ├── footer/          # Rodapé
+│   │   └── layout/          # Layout principal
+│   ├── pages/
+│   │   ├── login/           # Página de login
+│   │   ├── cardapio/        # Página do cardápio (aluno)
+│   │   └── admin-dashboard/ # Painel de administração
+│   ├── services/
+│   │   ├── auth.ts          # Serviço de autenticação
+│   │   └── data.ts          # Serviço de dados
+│   ├── guards/
+│   │   └── auth-guard.ts    # Guard de autenticação
+│   ├── app.ts               # Componente raiz
+│   ├── app.routes.ts        # Configuração de rotas
+│   └── app.config.ts        # Configuração da aplicação
+├── styles.scss              # Estilos globais
+└── main.ts                  # Ponto de entrada
+```
+
+## 🎨 Design System
+
+### Cores Principais
+- **Vermelho Primário:** #D1273F
+- **Amarelo Secundário:** #FECB30
+- **Burgundy Acentuado:** #7C2B40
+- **Fundo:** #F8F9FA
+- **Cinza:** #919191
+
+### Tipografia
+- **Títulos:** Lora (serif)
+- **Corpo:** Montserrat (sans-serif)
+
+## 🔐 Autenticação
+
+A aplicação utiliza o sistema de autenticação do PocketBase com:
+- Email e senha para login
+- Tokens JWT armazenados localmente
+- Guards de rota para proteção
+- Roles de usuário (aluno/admin)
+
+## 📱 Responsividade
+
+A aplicação é totalmente responsiva:
+- **Desktop:** Layout completo com grid de 3 colunas
+- **Tablet:** Layout com grid de 2 colunas
+- **Mobile:** Layout com 1 coluna
+
+## 🐛 Troubleshooting
+
+### Erro de conexão com PocketBase
+- Verifique se o servidor PocketBase está rodando
+- Confirme a URL em `src/app/services/auth.ts`
+
+### Erro de autenticação
+- Verifique se o usuário existe no PocketBase
+- Confirme se a senha está correta
+- Verifique se o campo `role` está configurado
+
+### Dados não aparecem
+- Verifique se as coleções foram criadas
+- Confirme se há dados nas coleções
+- Verifique as API Rules
+
+## 📝 Notas Importantes
+
+- O projeto utiliza Angular 17+ com standalone components
+- PocketBase fornece o backend e banco de dados
+- Materialize CSS é utilizado para componentes base
+- A aplicação é totalmente responsiva e acessível
+
+## 🎓 Para Fins Educacionais
+
+Este é um projeto MVP (Mínimo Produto Viável) desenvolvido para fins educacionais. Para produção, considere:
+- Adicionar testes unitários e de integração
+- Implementar tratamento de erros mais robusto
+- Adicionar validações mais complexas
+- Implementar cache de dados
+- Adicionar logs e monitoramento
+
+## 📚 Tecnologias Utilizadas
+
+- **Frontend:** Angular 17+, TypeScript
+- **Backend:** PocketBase
+- **Banco de Dados:** SQLite (PocketBase)
+- **CSS:** SCSS, Materialize CSS
+- **Tipografia:** Montserrat, Lora
+- **Ícones:** Material Icons

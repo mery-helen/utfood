@@ -1,0 +1,198 @@
+<app-header></app-header>
+
+<main class="admin-main">
+  <div class="container">
+    <!-- Cabeçalho -->
+    <div class="admin-header">
+      <h1 class="page-title">Painel de Administração</h1>
+      <button class="btn btn-primary" (click)="openForm()">
+        + Adicionar Item
+      </button>
+    </div>
+
+    <!-- Mensagens -->
+    <div class="alert alert-error" *ngIf="error">
+      <span class="alert-icon">⚠️</span>
+      <span class="alert-message">{{ error }}</span>
+      <button type="button" class="alert-close" (click)="clearMessages()">
+        ✕
+      </button>
+    </div>
+
+    <div class="alert alert-success" *ngIf="success">
+      <span class="alert-icon">✓</span>
+      <span class="alert-message">{{ success }}</span>
+      <button type="button" class="alert-close" (click)="clearMessages()">
+        ✕
+      </button>
+    </div>
+
+    <!-- Carregamento -->
+    <div class="loading" *ngIf="isLoading">
+      <p>Carregando itens...</p>
+    </div>
+
+    <!-- Tabela de Itens -->
+    <div class="items-table-container" *ngIf="!isLoading && itens.length > 0">
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itens" class="item-row">
+            <td class="cell-nome">{{ item.nome }}</td>
+            <td class="cell-descricao">{{ item.descricao }}</td>
+            <td class="cell-categoria">{{ getCategoryName(item.categoria) }}</td>
+            <td class="cell-preco">{{ formatPrice(item.preco) }}</td>
+            <td class="cell-status">
+              <span class="status-badge" [class.disponivel]="item.disponivel">
+                {{ item.disponivel ? 'Disponível' : 'Indisponível' }}
+              </span>
+            </td>
+            <td class="cell-acoes">
+              <button
+                class="btn-action btn-toggle"
+                (click)="toggleDisponibilidade(item)"
+                [title]="item.disponivel ? 'Marcar como indisponível' : 'Marcar como disponível'"
+              >
+                {{ item.disponivel ? '🔓' : '🔒' }}
+              </button>
+              <button
+                class="btn-action btn-edit"
+                (click)="openForm(item)"
+                title="Editar item"
+              >
+                ✏️
+              </button>
+              <button
+                class="btn-action btn-delete"
+                (click)="deleteItem(item.id)"
+                title="Remover item"
+              >
+                🗑️
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Estado Vazio -->
+    <div class="empty-state" *ngIf="!isLoading && itens.length === 0">
+      <p class="empty-message">Nenhum item cadastrado. Clique em "Adicionar Item" para começar.</p>
+    </div>
+  </div>
+
+  <!-- Modal de Formulário -->
+  <div class="modal-overlay" *ngIf="showForm" (click)="closeForm()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          {{ editingItem ? 'Editar Item' : 'Adicionar Novo Item' }}
+        </h2>
+        <button class="modal-close" (click)="closeForm()">✕</button>
+      </div>
+
+      <form [formGroup]="itemForm" (ngSubmit)="saveItem()" class="item-form">
+        <!-- Nome -->
+        <div class="form-group">
+          <label for="nome" class="form-label">Nome do Item *</label>
+          <input
+            id="nome"
+            type="text"
+            formControlName="nome"
+            placeholder="Ex: Coxinha de Frango"
+            class="form-input"
+          />
+          <span class="form-error" *ngIf="itemForm.get('nome')?.invalid && itemForm.get('nome')?.touched">
+            Nome é obrigatório
+          </span>
+        </div>
+
+        <!-- Descrição -->
+        <div class="form-group">
+          <label for="descricao" class="form-label">Descrição *</label>
+          <textarea
+            id="descricao"
+            formControlName="descricao"
+            placeholder="Descreva o item..."
+            class="form-input"
+            rows="3"
+          ></textarea>
+          <span class="form-error" *ngIf="itemForm.get('descricao')?.invalid && itemForm.get('descricao')?.touched">
+            Descrição é obrigatória
+          </span>
+        </div>
+
+        <!-- Categoria -->
+        <div class="form-group">
+          <label for="categoria" class="form-label">Categoria *</label>
+          <select
+            id="categoria"
+            formControlName="categoria"
+            class="form-input"
+          >
+            <option value="">Selecione uma categoria</option>
+            <option *ngFor="let cat of categorias" [value]="cat.id">
+              {{ cat.nome }}
+            </option>
+          </select>
+          <span class="form-error" *ngIf="itemForm.get('categoria')?.invalid && itemForm.get('categoria')?.touched">
+            Categoria é obrigatória
+          </span>
+        </div>
+
+        <!-- Preço -->
+        <div class="form-group">
+          <label for="preco" class="form-label">Preço (R$) *</label>
+          <input
+            id="preco"
+            type="number"
+            formControlName="preco"
+            placeholder="0.00"
+            class="form-input"
+            step="0.01"
+            min="0"
+          />
+          <span class="form-error" *ngIf="itemForm.get('preco')?.invalid && itemForm.get('preco')?.touched">
+            Preço inválido
+          </span>
+        </div>
+
+        <!-- Disponibilidade -->
+        <div class="form-group form-checkbox">
+          <label for="disponivel" class="form-label">
+            <input
+              id="disponivel"
+              type="checkbox"
+              formControlName="disponivel"
+              class="checkbox-input"
+            />
+            <span class="checkbox-label">Disponível para venda</span>
+          </label>
+        </div>
+
+        <!-- Botões -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="closeForm()">
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="itemForm.invalid"
+          >
+            {{ editingItem ? 'Atualizar' : 'Adicionar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

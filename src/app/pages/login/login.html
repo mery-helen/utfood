@@ -1,0 +1,159 @@
+<div class="login-container">
+  <div class="login-card">
+    <!-- Logo e Título -->
+    <div class="login-header">
+      <div class="logo-section">
+        <h1 class="logo">🍽️</h1>
+        <h2>UTFood</h2>
+        <p class="subtitle">Sistema de Cardápio Digital da Universidade</p>
+      </div>
+    </div>
+
+    <!-- Abas de Login -->
+    <div class="login-tabs">
+      <button
+        class="tab-button"
+        [class.active]="activeTab === 'student'"
+        (click)="switchTab('student')"
+      >
+        <span class="tab-icon">👤</span>
+        Aluno
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="activeTab === 'admin'"
+        (click)="switchTab('admin')"
+      >
+        <span class="tab-icon">🔐</span>
+        Administrador
+      </button>
+    </div>
+
+    <!-- Formulário de Login - Aluno -->
+    <div class="login-content" *ngIf="activeTab === 'student'">
+      <form [formGroup]="studentForm" (ngSubmit)="onStudentLogin()" class="login-form">
+        <!-- Mensagem de Erro -->
+        <div class="alert alert-error" *ngIf="studentError">
+          <span class="alert-icon">⚠️</span>
+          <span class="alert-message">{{ studentError }}</span>
+          <button
+            type="button"
+            class="alert-close"
+            (click)="clearStudentError()"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Campo de Email/RA -->
+        <div class="form-group">
+          <label for="student-email" class="form-label">Email ou RA</label>
+          <input
+            id="student-email"
+            type="email"
+            formControlName="email"
+            placeholder="Digite seu email ou RA"
+            class="form-input"
+            [disabled]="isLoading"
+            (input)="clearStudentError()"
+          />
+          <span class="form-error" *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched">
+            Email inválido
+          </span>
+        </div>
+
+        <!-- Campo de Senha -->
+        <div class="form-group">
+          <label for="student-password" class="form-label">Senha</label>
+          <input
+            id="student-password"
+            type="password"
+            formControlName="password"
+            placeholder="Digite sua senha"
+            class="form-input"
+            [disabled]="isLoading"
+            (input)="clearStudentError()"
+          />
+          <span class="form-error" *ngIf="studentForm.get('password')?.invalid && studentForm.get('password')?.touched">
+            Senha deve ter pelo menos 4 caracteres
+          </span>
+        </div>
+
+        <!-- Botão de Login -->
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          [disabled]="studentForm.invalid || isLoading"
+        >
+          {{ isLoading ? 'Entrando...' : 'Entrar como Aluno' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Formulário de Login - Administrador -->
+    <div class="login-content" *ngIf="activeTab === 'admin'">
+      <form [formGroup]="adminForm" (ngSubmit)="onAdminLogin()" class="login-form">
+        <!-- Mensagem de Erro -->
+        <div class="alert alert-error" *ngIf="adminError">
+          <span class="alert-icon">⚠️</span>
+          <span class="alert-message">{{ adminError }}</span>
+          <button
+            type="button"
+            class="alert-close"
+            (click)="clearAdminError()"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Campo de Email -->
+        <div class="form-group">
+          <label for="admin-email" class="form-label">Email</label>
+          <input
+            id="admin-email"
+            type="email"
+            formControlName="email"
+            placeholder="Digite seu email"
+            class="form-input"
+            [disabled]="isLoading"
+            (input)="clearAdminError()"
+          />
+          <span class="form-error" *ngIf="adminForm.get('email')?.invalid && adminForm.get('email')?.touched">
+            Email inválido
+          </span>
+        </div>
+
+        <!-- Campo de Senha -->
+        <div class="form-group">
+          <label for="admin-password" class="form-label">Senha</label>
+          <input
+            id="admin-password"
+            type="password"
+            formControlName="password"
+            placeholder="Digite sua senha"
+            class="form-input"
+            [disabled]="isLoading"
+            (input)="clearAdminError()"
+          />
+          <span class="form-error" *ngIf="adminForm.get('password')?.invalid && adminForm.get('password')?.touched">
+            Senha deve ter pelo menos 4 caracteres
+          </span>
+        </div>
+
+        <!-- Botão de Login -->
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          [disabled]="adminForm.invalid || isLoading"
+        >
+          {{ isLoading ? 'Entrando...' : 'Entrar como Administrador' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="login-footer">
+      <p class="footer-text">Sistema seguro com autenticação PocketBase</p>
+    </div>
+  </div>
+</div>

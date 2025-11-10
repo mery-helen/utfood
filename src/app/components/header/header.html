@@ -1,0 +1,44 @@
+<header class="header">
+  <nav class="navbar">
+    <div class="container flex-between">
+      <!-- Logo -->
+      <div class="navbar-brand">
+        <h1 class="logo">🍽️ UTFood</h1>
+      </div>
+
+      <!-- Navegação -->
+      <div class="navbar-menu" *ngIf="isLoggedIn">
+        <div class="navbar-nav">
+          <a 
+            routerLink="/cardapio" 
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            Cardápio
+          </a>
+          <a 
+            *ngIf="currentUser?.role === 'admin'"
+            routerLink="/admin" 
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            Administração
+          </a>
+        </div>
+      </div>
+
+      <!-- Informações do Usuário -->
+      <div class="navbar-user" *ngIf="isLoggedIn && currentUser">
+        <div class="user-info">
+          <span class="user-name">{{ currentUser.name || currentUser.email }}</span>
+          <span class="user-role" [class.admin]="currentUser.role === 'admin'">
+            {{ currentUser.role === 'admin' ? 'Administrador' : 'Aluno' }}
+          </span>
+        </div>
+        <button class="btn btn-logout" (click)="logout()">
+          Sair
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
